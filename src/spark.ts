@@ -1,7 +1,7 @@
 type SparkType = 'blue' | 'pink' | 'green' | 'raceWhite' | 'otherWhite';
 
 interface Spark {
-    skillName?: string 
+    name: string 
     type: SparkType;
     starLevel: 1 | 2 | 3;
 }
@@ -9,10 +9,10 @@ interface Spark {
 interface Parent {
     sparks: Spark[];
     affinity: number;
+    isGrandparent: boolean 
 }
 
 interface InheritanceTarget {
-    skillName?: string
     sparkName: string
-
+    acceptedTypes: SparkType[]
 }
