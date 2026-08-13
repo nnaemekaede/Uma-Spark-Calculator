@@ -21,7 +21,7 @@
 
 ## Current State:
 
--Project Scaffolded (Vite + React + TS), pushed to Github, deployed to Vercel.
+- Project Scaffolded (Vite + React + TS), pushed to Github, deployed to Vercel.
 - `src/spark.ts` — `SparkType`, `Spark`, `Parent`, `InheritanceTarget` interfaces defined.
 - Next up: write `computeSparkChance(target, parent)` — turns a target + parent's
   actual sparks into a proc probability, using the base-chance table + affinity formula.
