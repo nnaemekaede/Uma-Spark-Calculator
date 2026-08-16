@@ -19,8 +19,9 @@ interface InheritanceTarget {
 
 function computeSparkChance(target: InheritanceTarget, parents: Parent[]): number {
     let totalChance = 0
+    let lineageSparkMissRate = 1
     for (const parent of parents ) {
-        let sparkMissRate = 0
+        let parentSparkMissRate = 1
         for (const spark of parent.sparks) {
             if (target.acceptedTypes.includes(spark.type) && target.sparkName == spark.sparkName){
                 let baseRate = 0
@@ -39,13 +40,26 @@ function computeSparkChance(target: InheritanceTarget, parents: Parent[]): numbe
                 if (parent.isGrandparent) {
                     parentSparkOdds = parentSparkOdds / 2
                 }
-                if (sparkMissRate == 0) {
-                 sparkMissRate = (1 - parentSparkOdds)
-                } else {
-                 sparkMissRate *= (1 - parentSparkOdds)
-                }  
+                parentSparkMissRate *= (1 - parentSparkOdds)
             }
         }
+        lineageSparkMissRate *= parentSparkMissRate
     }
+    totalChance = 1 - lineageSparkMissRate
     return totalChance
+}
+
+function computeSparkChanceCheck(target: InheritanceTarget, parents: Parent[]): number {
+    let inspirationMissRate = 1 - computeSparkChance(target, parents)
+    return 1 - (inspirationMissRate ** 2)
+}
+
+function simulateOneRun(target: InheritanceTarget, parents: Parent[]): boolean {
+    let inspirationSparkChance = computeSparkChance(target, parents)
+    for (let i: number = 0; i < 2; i++) {
+        if (Math.random() < inspirationSparkChance) {
+            return true
+        }
+    }
+    return false
 }
